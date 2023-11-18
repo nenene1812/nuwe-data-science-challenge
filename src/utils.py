@@ -10,16 +10,13 @@ def xml_to_gen_data(xml_data) -> dict:
 
     # Define the XML namespace
     namespace = {'ns': 'urn:iec62325.351:tc57wg16:451-6:generationloaddocument:3:0'}
-    
     # Parse the XML data
     root = ET.fromstring(xml_data)
-    
     # Get all TimeSeries tags
     time_series_tags = root.findall('.//ns:TimeSeries', namespace)
-    
     # Initialize a dictionary to hold the data
-    data = {"StartTime": [], "EndTime": [], "AreaID": [], "UnitName": [], "PsrType": [], "quantity": []}
-
+    data = {"StartTime": [], "EndTime": [], "AreaID": [], 
+            "UnitName": [], "PsrType": [], "quantity": []}
     # Loop over all TimeSeries tags
     for ts in time_series_tags:
         # Extract PsrType from MktPSRType if it exists
@@ -52,7 +49,6 @@ def xml_to_gen_data(xml_data) -> dict:
                 start_time_interval = datetime.fromisoformat(period_start.replace('Z', '+00:00'))
                 end_time_interval = start_time_interval + timedelta(minutes=resolution_minutes*(int(position)-1))
                 start_time_interval = end_time_interval - timedelta(minutes=resolution_minutes)
-
                 # Append the StartTime, EndTime, AreaID, UnitName, PsrType, and quantity values to the data dictionary
                 data["StartTime"].append(start_time_interval.isoformat(timespec='minutes')+'Z')
                 data["EndTime"].append(end_time_interval.isoformat(timespec='minutes')+'Z')
@@ -66,7 +62,6 @@ def xml_to_gen_data(xml_data) -> dict:
 
     # Create a separate DataFrame for each PsrType
     df_dict = {psr_type: df[df["PsrType"] == psr_type] for psr_type in df["PsrType"].unique()}
-    
     return df_dict
 
 def xml_to_load_dataframe(xml_data) -> pd.DataFrame:
@@ -92,19 +87,15 @@ def xml_to_load_dataframe(xml_data) -> pd.DataFrame:
 
             # Resolution is PT15M or PT60M
             resolution_minutes = int(resolution.replace('PT', '').replace('M', ''))
-            
             for point in period.findall('ns:Point', namespace):
                 position = point.find('ns:position', namespace).text
                 quantity = point.find('ns:quantity', namespace).text
-
                 # calculate the actual start and end time for each resolution_minutes interval
                 start_time_interval = datetime.fromisoformat(start_time.replace('Z', '+00:00'))
                 end_time_interval = start_time_interval + timedelta(minutes=resolution_minutes*(int(position)-1))
                 start_time_interval = end_time_interval - timedelta(minutes=resolution_minutes)
-
                 data.append([start_time_interval.isoformat(timespec='minutes')+'Z', end_time_interval.isoformat(timespec='minutes')+'Z', 
                              domain_mrid, unit_name, quantity])
-
     df = pd.DataFrame(data, columns=['StartTime', 'EndTime', 'AreaID', 'UnitName', 'Load'])
     return df
 
@@ -116,7 +107,7 @@ def make_url(base_url, params):
 def perform_get_request(base_url, params):
     """Perform request to API"""
     url = make_url(base_url, params)
-    response = requests.get(url)
+    response = requests.get(url, timeout=1000)
     if response.status_code == 200:
         return response.text
     else:
