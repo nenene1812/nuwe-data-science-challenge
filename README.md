@@ -15,5 +15,5 @@ A Data Science challenge will be posed related to sustainability- "EcoForecast: 
 
 ## Acknowledgements
 
-- [Nuwe](https://nuwe.io/)
-- [Schneider Electric](https://www.se.com/ww/en/)
+- [Nuwe](https://nuwe.io/) : Organizer 
+- [Schneider Electric](https://www.se.com/ww/en/) : Challenge Owner
