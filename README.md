@@ -7,7 +7,9 @@ https://nuwe.io/dev/competitions/schneider-electric-european-2023
 
 ## Introduction
 
-A Data Science challenge will be posed related to sustainability- "EcoForecast: Revolutionizing Green Energy Surplus Prediction in Europe"- With increasing digitalisation and the ever-growing reliance on data servers, the significance of sustainable computing is on the rise
+A Data Science challenge will be posed related to sustainability
+ "EcoForecast: Revolutionizing Green Energy Surplus Prediction in Europe" 
+ With increasing digitalisation and the ever-growing reliance on data servers, the significance of sustainable computing is on the rise
 
 ### Authors
 

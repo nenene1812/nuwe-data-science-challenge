@@ -1,10 +1,12 @@
+"""This module provides functions to parse command-line arguments."""
 import argparse
 import datetime
-import pandas as pd
+# import pandas as pd
 from utils import perform_get_request, xml_to_load_dataframe, xml_to_gen_data
 
-def get_load_data_from_entsoe(regions, periodStart='202302240000', periodEnd='202303240000', output_path='./data'):
-    
+def get_load_data_from_entsoe(regions, period_start='202302240000', 
+                              period_end='202303240000', output_path='./data'):
+    """ load data"""
     # TODO: There is a period range limit of 1 year for this API. Process in 1 year chunks if needed
     
     # URL of the RESTful API
@@ -17,8 +19,8 @@ def get_load_data_from_entsoe(regions, periodStart='202302240000', periodEnd='20
         'documentType': 'A65',
         'processType': 'A16',
         'outBiddingZone_Domain': 'FILL_IN', # used for Load data
-        'periodStart': periodStart, # in the format YYYYMMDDHHMM
-        'periodEnd': periodEnd # in the format YYYYMMDDHHMM
+        'periodStart': period_start, # in the format YYYYMMDDHHMM
+        'periodEnd': period_end # in the format YYYYMMDDHHMM
     }
 
     # Loop through the regions and get data for each region
@@ -30,15 +32,16 @@ def get_load_data_from_entsoe(regions, periodStart='202302240000', periodEnd='20
         response_content = perform_get_request(url, params)
 
         # Response content is a string of XML data
-        df = xml_to_load_dataframe(response_content, 'Load')
+        df = xml_to_load_dataframe(response_content)
 
         # Save the DataFrame to a CSV file
         df.to_csv(f'{output_path}/load_{region}.csv', index=False)
        
     return
 
-def get_gen_data_from_entsoe(regions, periodStart='202302240000', periodEnd='202303240000', output_path='./data'):
-    
+def get_gen_data_from_entsoe(regions, period_start='202302240000', 
+                             period_end='202303240000', output_path='./data'):
+    """Get data"""
     # TODO: There is a period range limit of 1 day for this API. Process in 1 day chunks if needed
 
     # URL of the RESTful API
@@ -51,8 +54,8 @@ def get_gen_data_from_entsoe(regions, periodStart='202302240000', periodEnd='202
         'processType': 'A16',
         'outBiddingZone_Domain': 'FILL_IN', # used for Load data
         'in_Domain': 'FILL_IN', # used for Generation data
-        'periodStart': periodStart, # in the format YYYYMMDDHHMM
-        'periodEnd': periodEnd # in the format YYYYMMDDHHMM
+        'periodStart': period_start, # in the format YYYYMMDDHHMM
+        'periodEnd': period_end # in the format YYYYMMDDHHMM
     }
 
     # Loop through the regions and get data for each region
@@ -76,6 +79,7 @@ def get_gen_data_from_entsoe(regions, periodStart='202302240000', periodEnd='202
 
 
 def parse_arguments():
+    """parse function"""
     parser = argparse.ArgumentParser(description='Data ingestion script for Energy Forecasting Hackathon')
     parser.add_argument(
         '--start_time', 
@@ -98,7 +102,7 @@ def parse_arguments():
     return parser.parse_args()
 
 def main(start_time, end_time, output_path):
-    
+    """Run function"""
     regions = {
         'HU': '10YHU-MAVIR----U',
         'IT': '10YIT-GRTN-----B',

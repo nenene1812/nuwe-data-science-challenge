@@ -1,5 +1,4 @@
 import requests
-from datetime import datetime, timedelta
 import xml.etree.ElementTree as ET
 import pandas as pd
 from datetime import datetime, timedelta
@@ -110,10 +109,12 @@ def xml_to_load_dataframe(xml_data) -> pd.DataFrame:
     return df
 
 def make_url(base_url, params):
+    """Create URL"""
     query_string = "&".join([f"{k}={v}" for k, v in params.items()])
     return f"{base_url}?{query_string}"
 
 def perform_get_request(base_url, params):
+    """Perform request to API"""
     url = make_url(base_url, params)
     response = requests.get(url)
     if response.status_code == 200:
