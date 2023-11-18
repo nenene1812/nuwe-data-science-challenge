@@ -1,2 +1,20 @@
-# SE-Europe-Data_Challenge
-the NUWE - Schneider Electric European Data Science Challenge in November 2023.
+# SCHNEIDER ELECTRIC EUROPEAN HACKATHON 2023
+
+#📈 CHALLENGE 1: Data Science challenge: 
+##A Data Science challenge will be posed related to sustainability- "EcoForecast: Revolutionizing Green Energy Surplus Prediction in Europe"- With increasing digitalisation and the ever-growing reliance on data servers, the significance of sustainable computing is on the rise
+
+https://nuwe.io/dev/competitions/schneider-electric-european-2023
+
+
+## Introduction
+
+
+
+### Authors
+
+- [@nenene](https://github.com/nenene1812)
+
+## Acknowledgements
+
+- Nuwe [https://nuwe.io/]
+- Schneider Electric [https://www.se.com/ww/en/]
