@@ -6,9 +6,7 @@ from utils import perform_get_request, xml_to_load_dataframe, xml_to_gen_data
 
 def get_load_data_from_entsoe(regions, period_start='202302240000', 
                               period_end='202303240000', output_path='./data'):
-    """ load data"""
-    # TODO: There is a period range limit of 1 year for this API. Process in 1 year chunks if needed
-    
+    """Get load (energy using) data """
     # URL of the RESTful API
     url = 'https://web-api.tp.entsoe.eu/api'
 
@@ -16,8 +14,8 @@ def get_load_data_from_entsoe(regions, period_start='202302240000',
     # Refer to https://transparency.entsoe.eu/content/static_content/Static%20content/web%20api/Guide.html#_documenttype
     params = {
         'securityToken': '1d9cd4bd-f8aa-476c-8cc1-3442dc91506d',
-        'documentType': 'A65',
-        'processType': 'A16',
+        'documentType': 'A65', # Actual generation per type
+        'processType': 'A16', # Realised
         'outBiddingZone_Domain': 'FILL_IN', # used for Load data
         'periodStart': period_start, # in the format YYYYMMDDHHMM
         'periodEnd': period_end # in the format YYYYMMDDHHMM
@@ -27,7 +25,6 @@ def get_load_data_from_entsoe(regions, period_start='202302240000',
     for region, area_code in regions.items():
         print(f'Fetching data for {region}...')
         params['outBiddingZone_Domain'] = area_code
-    
         # Use the requests library to get data from the API for the specified time range
         response_content = perform_get_request(url, params)
 
@@ -36,22 +33,19 @@ def get_load_data_from_entsoe(regions, period_start='202302240000',
 
         # Save the DataFrame to a CSV file
         df.to_csv(f'{output_path}/load_{region}.csv', index=False)
-       
     return
 
 def get_gen_data_from_entsoe(regions, period_start='202302240000', 
                              period_end='202303240000', output_path='./data'):
-    """Get data"""
-    # TODO: There is a period range limit of 1 day for this API. Process in 1 day chunks if needed
-
+    """Get energy generate data"""
     # URL of the RESTful API
     url = 'https://web-api.tp.entsoe.eu/api'
 
     # General parameters for the API
     params = {
         'securityToken': '1d9cd4bd-f8aa-476c-8cc1-3442dc91506d',
-        'documentType': 'A75',
-        'processType': 'A16',
+        'documentType': 'A75', # Actual generation per type
+        'processType': 'A16', # Realised
         'outBiddingZone_Domain': 'FILL_IN', # used for Load data
         'in_Domain': 'FILL_IN', # used for Generation data
         'periodStart': period_start, # in the format YYYYMMDDHHMM
@@ -62,8 +56,7 @@ def get_gen_data_from_entsoe(regions, period_start='202302240000',
     for region, area_code in regions.items():
         print(f'Fetching data for {region}...')
         params['outBiddingZone_Domain'] = area_code
-        params['in_Domain'] = area_code
-    
+        params['in_Domain'] = area_code   
         # Use the requests library to get data from the API for the specified time range
         response_content = perform_get_request(url, params)
 
@@ -74,13 +67,12 @@ def get_gen_data_from_entsoe(regions, period_start='202302240000',
         for psr_type, df in dfs.items():
             # Save the DataFrame to a CSV file
             df.to_csv(f'{output_path}/gen_{region}_{psr_type}.csv', index=False)
-    
     return
 
 
 def parse_arguments():
     """parse function"""
-    parser = argparse.ArgumentParser(description='Data ingestion script for Energy Forecasting Hackathon')
+    parser = argparse.ArgumentParser(description='Data ingestion for Energy Forecasting Hackathon')
     parser.add_argument(
         '--start_time', 
         type=lambda s: datetime.datetime.strptime(s, '%Y-%m-%d'), 
@@ -114,11 +106,9 @@ def main(start_time, end_time, output_path):
         'SE': '10YSE-1--------K',
         'NE': '10YNL----------L',
     }
-
     # Transform start_time and end_time to the format required by the API: YYYYMMDDHHMM
     start_time = start_time.strftime('%Y%m%d%H%M')
     end_time = end_time.strftime('%Y%m%d%H%M')
-
     # Get Load data from ENTSO-E
     get_load_data_from_entsoe(regions, start_time, end_time, output_path)
 
@@ -128,3 +118,4 @@ def main(start_time, end_time, output_path):
 if __name__ == "__main__":
     args = parse_arguments()
     main(args.start_time, args.end_time, args.output_path)
+    # End-of-file (EOF)
