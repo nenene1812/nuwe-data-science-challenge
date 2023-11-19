@@ -1,8 +1,9 @@
 import argparse
 
 def load_data(file_path):
+    """ELT: load data from ingestion data """
     # TODO: Load data from CSV file
-
+    df = 'a'
     return df
 
 def clean_data(df):
