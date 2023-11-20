@@ -1,7 +1,9 @@
 import requests
 import xml.etree.ElementTree as ET
 import pandas as pd
+import os
 from datetime import datetime, timedelta
+ 
 
 def xml_to_gen_data(xml_data) -> dict:
     """
@@ -112,3 +114,26 @@ def perform_get_request(base_url, params):
         return response.text
     else:
         return response.content
+    
+def list_files_containing_char(folder_path, character):
+    """ Get list file name based on specific character """
+    all_files = os.listdir(folder_path)
+    filtered_files = [file for file in all_files if character in file]
+    return filtered_files
+
+def load_query(query_name):
+    """Load sql as a string"""
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    # Construct the full file path
+    queries_file_path = os.path.join(dir_path, 'queries.sql')
+    queries = {}
+    query = None
+    with open(queries_file_path, 'r') as file:
+        for line in file:
+            if line.startswith('--'):
+                query = line.strip().lstrip('--').strip()
+                queries[query] = ''
+            elif query:
+                queries[query] += line
+
+    return queries[query_name].strip()
