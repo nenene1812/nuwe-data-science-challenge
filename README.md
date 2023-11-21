@@ -11,7 +11,7 @@ This repository contains a solution for the Schneider Electric Europe Green Ener
 
 The solution ingests renewable energy generation and electricity load time series data from 9 countries via the ENTSO-E API. Data cleaning, feature engineering, and model training were performed using RandomForestClassifier to output predictions on which country will have the most surplus green energy.
 
-The README describes the approach, documents key files, and discusses model performance. An F1 score of X was achieved on the test set. Please refer to the notebooks and scripts in [playground folder](https://github.com/nenene1812/nuwe-data-science-challenge/tree/main/playground) for implementation details.
+The README describes the approach, documents key files. Please refer to the notebooks and scripts in [playground folder](https://github.com/nenene1812/nuwe-data-science-challenge/tree/main/playground) for implementation details.
 
 ### Authors
 
@@ -51,6 +51,16 @@ The README describes the approach, documents key files, and discusses model perf
 
 The repository follows a modular approach, with separate scripts for each stage of the machine learning pipeline, ensuring ease of use and maintainability.
 
+## Instructions
+1. Install dependencies:
+`pip install -r requirements.txt`
+2. run_pipeline.sh
 
 ## Flow 
 ![Project flow](https://github.com/nenene1812/nuwe-data-science-challenge/blob/main/EcoForecast_Flow.png)
+
+## Key in Approach:
+1. **Data Processing**: Leveraging SQLite for data grouping by the hour to save processing time.
+2. **Model Training**: Use of RandomForestClassifier due to time constraints and to bypass the need for extensive domain knowledge.
+3. **Model Prediction**: Post-prediction processing involves removing hours without surplus and exporting the top 442 surplus predictions to a JSON file for result validation.
+
