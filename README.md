@@ -22,5 +22,38 @@ The README describes the approach, documents key files, and discusses model perf
 - [Nuwe](https://nuwe.io/) : Organizer 
 - [Schneider Electric](https://www.se.com/ww/en/) : Challenge Owner
 
+## Repository Structure
+
+### This repository is organized as follows:
+
+- `data/`: This directory holds the CSV files used for training and testing the models.
+  - `train.csv`: The training dataset.
+  - `test.csv`: The testing dataset.
+
+- `models/`: This directory is reserved for storing the trained models.
+  - `{country}_model.pkl`: The serialized form of the trained Prophet model for a particular country.
+
+- `predictions/`: This directory contains the outputs of the model predictions.
+  - `example_predictions.json`: An example file showing the structure of prediction outputs.
+  - `predictions.json`: The actual prediction results from the trained models.
+
+- `scripts/`: This directory contains shell scripts for automating the execution of the pipeline.
+  - `run_pipeline.sh`: A shell script to run the entire data processing and prediction pipeline.
+
+- `src/`: The source code directory with Python scripts for each step of the project pipeline.
+  - `data_ingestion.py`: Script responsible for loading and ingesting data.
+  - `data_processing.py`: Script for processing and cleaning data.
+  - `model_training.py`: Script or Jupyter notebook for training forecasting models.
+  - `model_prediction.py`: Script for making predictions with the trained models.
+  - `utils.py`: Utility functions used across the project.
+
+- `playground/`: A space for Jupyter notebooks used for exploratory data analysis and experimentation.
+  - `discover.ipynb`: A Jupyter notebook used for initial data exploration.
+
+- `README.md`: The file you are currently reading that explains the project structure and usage.
+
+The repository follows a modular approach, with separate scripts for each stage of the machine learning pipeline, ensuring ease of use and maintainability.
+
+
 ## Flow 
 ![Project flow](https://github.com/nenene1812/nuwe-data-science-challenge/blob/main/EcoForecast_Flow.png)
