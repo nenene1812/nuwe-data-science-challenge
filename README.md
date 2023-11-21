@@ -21,4 +21,4 @@ A Data Science challenge will be posed related to sustainability
 - [Schneider Electric](https://www.se.com/ww/en/) : Challenge Owner
 
 ## Flow 
-![Project flow]()
+![Project flow](https://github.com/nenene1812/nuwe-data-science-challenge/blob/main/EcoForecast_Flow.png)
