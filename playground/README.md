@@ -58,3 +58,28 @@ example
 19	load_NE	0
 20	index	0
 ```
+2. Check Zero value in data set 
+```
+StartDate             0
+dataHour              0
+green_energy_HU       0
+green_energy_IT       1
+green_energy_PO       1
+green_energy_SP       0
+green_energy_UK    5527
+green_energy_DE       0
+green_energy_DK       1
+green_energy_SE       2
+green_energy_NE       0
+load_HU               0
+load_IT               1
+load_PO               1
+load_SP               0
+load_UK            4020
+load_DE               0
+load_DK               1
+load_SE               1
+load_NE               0
+index                 0
+dtype: int64
+```

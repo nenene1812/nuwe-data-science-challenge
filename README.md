@@ -20,4 +20,5 @@ A Data Science challenge will be posed related to sustainability
 - [Nuwe](https://nuwe.io/) : Organizer 
 - [Schneider Electric](https://www.se.com/ww/en/) : Challenge Owner
 
-test code 
+## Flow 
+![Project flow]()
