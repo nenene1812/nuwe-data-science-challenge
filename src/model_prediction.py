@@ -1,21 +1,46 @@
 import pandas as pd
 import argparse
+import os 
+import pickle
+import numpy as np
+import json
 
 def load_data(file_path):
+    """ Load test data from CSV file """
     # TODO: Load test data from CSV file
+    print(f'Fetching data from {file_path} ...')
+    df = pd.read_csv(os.path.join(file_path, 'test_data.csv'))
     return df
 
 def load_model(model_path):
     # TODO: Load the trained model
+    with open(os.path.join(model_path, 'model.pkl'), 'rb') as model_file:
+        model = pickle.load(model_file)
     return model
 
 def make_predictions(df, model):
     # TODO: Use the model to make predictions on the test data
+    lag_features = [f'lag_{i}_hour' for i in range(1, 25)]
+    X_test = df[['hour', 'day_of_week', 'month'] + lag_features]
+    y_pred = model.predict(X_test)
+    predictions = y_pred
+    print(predictions)
     return predictions
 
 def save_predictions(predictions, predictions_file):
     # TODO: Save predictions to a JSON file
-    pass
+    predictions = predictions[predictions != 9]
+    predictions_list = predictions.tolist()
+    predictions_json = {
+    "target": {str(i): predictions_list[i] for i in range(442)}
+    }
+    json_string = json.dumps(predictions_json)
+    # Write to file
+    output_file_path = os.path.join(predictions_file, 'predictions.json')
+    with open(output_file_path, "w") as f:
+        f.write(json_string)
+        
+    print(f"JSON data is written to `{output_file_path}`")
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description='Prediction script for Energy Forecasting Hackathon')
