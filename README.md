@@ -26,12 +26,8 @@ The README describes the approach, documents key files, and discusses model perf
 
 ### This repository is organized as follows:
 
-- `data/`: This directory holds the CSV files used for training and testing the models.
-  - `train.csv`: The training dataset.
-  - `test.csv`: The testing dataset.
-
+- `data/`: This directory holds the CSV files used for project.
 - `models/`: This directory is reserved for storing the trained models.
-  - `{country}_model.pkl`: The serialized form of the trained Prophet model for a particular country.
 
 - `predictions/`: This directory contains the outputs of the model predictions.
   - `example_predictions.json`: An example file showing the structure of prediction outputs.
@@ -49,8 +45,9 @@ The README describes the approach, documents key files, and discusses model perf
 
 - `playground/`: A space for Jupyter notebooks used for exploratory data analysis and experimentation.
   - `discover.ipynb`: A Jupyter notebook used for initial data exploration.
+  - `README.md`: Insight gained with dataset. 
 
-- `README.md`: The file you are currently reading that explains the project structure and usage.
+
 
 The repository follows a modular approach, with separate scripts for each stage of the machine learning pipeline, ensuring ease of use and maintainability.
 
